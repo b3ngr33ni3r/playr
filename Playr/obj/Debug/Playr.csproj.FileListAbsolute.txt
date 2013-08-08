@@ -1,0 +1,11 @@
+C:\Users\i53259\Documents\Visual Studio 2012\Projects\Playr\Playr\bin\Debug\Playr.exe.config
+C:\Users\i53259\Documents\Visual Studio 2012\Projects\Playr\Playr\bin\Debug\Playr.exe
+C:\Users\i53259\Documents\Visual Studio 2012\Projects\Playr\Playr\bin\Debug\Playr.pdb
+C:\Users\i53259\Documents\Visual Studio 2012\Projects\Playr\Playr\obj\Debug\Playr.csprojResolveAssemblyReference.cache
+C:\Users\i53259\Documents\Visual Studio 2012\Projects\Playr\Playr\obj\Debug\Playr.Properties.Resources.resources
+C:\Users\i53259\Documents\Visual Studio 2012\Projects\Playr\Playr\obj\Debug\Playr.csproj.GenerateResource.Cache
+C:\Users\i53259\Documents\Visual Studio 2012\Projects\Playr\Playr\obj\Debug\Playr.exe
+C:\Users\i53259\Documents\Visual Studio 2012\Projects\Playr\Playr\obj\Debug\Playr.pdb
+C:\Users\i53259\Documents\Visual Studio 2012\Projects\Playr\Playr\bin\Debug\LeapCSharp.NET4.0.dll
+C:\Users\i53259\Documents\Visual Studio 2012\Projects\Playr\Playr\obj\Debug\Interop.Shell32.dll
+C:\Users\i53259\Documents\Visual Studio 2012\Projects\Playr\Playr\obj\Debug\Playr.csproj.ResolveComReference.cache
