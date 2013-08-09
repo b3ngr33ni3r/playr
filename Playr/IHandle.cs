@@ -7,19 +7,7 @@ using Leap;
 namespace Playr
 {
 
-    public class IHandleOptions
-    {
-        public enum FiringMethod
-        {
-            OnFrame, OnInit, OnExit, OnConnect, OnDisconnect, OnFocusGained, OnFocusLost
-        }
-        public FiringMethod firingMethod;
-
-        public IHandleOptions(FiringMethod method = FiringMethod.OnFrame)
-        {
-            firingMethod = method;
-        }
-    }
+    
 
     /**
      * this defines a single event
@@ -29,8 +17,44 @@ namespace Playr
      **/
     class IHandle
     {
-        
+
+        public class IHandleOptions
+        {
+            public static const long TIMESTAMP_NEVER_FIRED = -1;
+
+            public enum FiringMethod
+            {
+                OnFrame, OnInit, OnExit, OnConnect, OnDisconnect, OnFocusGained, OnFocusLost
+            }
+            /*public struct RequiredDistance
+            {
+                public struct Entry{
+                    public Axis axis;
+                    public float distance;
+                }
+                public enum Axis { X, Y, Z }
+                public Entry[] entries;
+            }*/
+            public FiringMethod firingMethod;
+            public long firedTimestamp = TIMESTAMP_NEVER_FIRED;
+            public long repeatTime = 200000;
+            //public RequiredDistance requiredDistance;
+
+            public IHandleOptions(FiringMethod method = FiringMethod.OnFrame)
+            {
+                firingMethod = method;
+                //RequiredDistance.Entry entry;
+
+                /*entry.axis = RequiredDistance.Axis.X;
+                entry.distance = 200;
+                requiredDistance.entries = new RequiredDistance.Entry[1] { entry };*/
+            }
+
+        }
+
         public event EventHandler<Controller> Actions;
+
+        private List<Vector> _pastQueue = new List<Vector>();
 
         private IHandleOptions opts;
         public IHandleOptions Options
@@ -49,9 +73,18 @@ namespace Playr
             this.opts = new IHandleOptions();
         }
 
-        public void InvokeAll(Controller controller)
+        public bool InvokeAll(Controller controller, HandsTracker handsTracker = null, long frameTime = -1)
         {
-            Actions.Invoke(opts, controller);
+            //now pass a combination of IHandleOptions and HandsTracker to the method
+
+            if (frameTime == -1 && opts.firingMethod == IHandleOptions.FiringMethod.OnFrame)
+                return false;
+
+            if ((opts.firingMethod == IHandleOptions.FiringMethod.OnFrame) && (opts.firedTimestamp == IHandleOptions.TIMESTAMP_NEVER_FIRED || opts.firedTimestamp < frameTime - opts.repeatTime))
+                Actions.Invoke(opts, controller);
+
+            return true;
         }
+
     }
 }

@@ -10,8 +10,10 @@ namespace Playr
     {
         public List<IHandle> Handles;
         private Controller controller;
+        private HandsTracker handsTracker;
         public Handler() : base()
         {
+            handsTracker = new HandsTracker(1000);
             controller = new Controller();
             controller.AddListener(this);
             controller.SetPolicyFlags(Controller.PolicyFlag.POLICYBACKGROUNDFRAMES);
@@ -25,65 +27,74 @@ namespace Playr
 
         override public void OnInit(Controller arg0)
         {
+            //Frame frame = arg0.Frame();
             foreach (IHandle handle in Handles)
             {
-                if (handle.Options.firingMethod == IHandleOptions.FiringMethod.OnInit)
-                    handle.InvokeAll(controller);
+                if (handle.Options.firingMethod == IHandle.IHandleOptions.FiringMethod.OnInit)
+                    handle.InvokeAll(controller/*,frame.Timestamp*/);
             }
 
         }
 
         override public void OnExit(Controller arg0)
         {
+            //Frame frame = arg0.Frame();
             foreach (IHandle handle in Handles)
             {
-                if (handle.Options.firingMethod == IHandleOptions.FiringMethod.OnExit)
-                    handle.InvokeAll(controller);
+                if (handle.Options.firingMethod == IHandle.IHandleOptions.FiringMethod.OnInit)
+                    handle.InvokeAll(controller/*,frame.Timestamp*/);
             }
         }
 
         override public void OnConnect(Controller arg0)
         {
+            //Frame frame = arg0.Frame();
             foreach (IHandle handle in Handles)
             {
-                if (handle.Options.firingMethod == IHandleOptions.FiringMethod.OnConnect)
-                    handle.InvokeAll(controller);
+                if (handle.Options.firingMethod == IHandle.IHandleOptions.FiringMethod.OnInit)
+                    handle.InvokeAll(controller/*,frame.Timestamp*/);
             }
         }
 
         override public void OnDisconnect(Controller arg0)
         {
+            //Frame frame = arg0.Frame();
             foreach (IHandle handle in Handles)
             {
-                if (handle.Options.firingMethod == IHandleOptions.FiringMethod.OnDisconnect)
-                    handle.InvokeAll(controller);
+                if (handle.Options.firingMethod == IHandle.IHandleOptions.FiringMethod.OnInit)
+                    handle.InvokeAll(controller/*,frame.Timestamp*/);
             }
         }
 
         override public void OnFocusGained(Controller arg0)
         {
+            //Frame frame = arg0.Frame();
             foreach (IHandle handle in Handles)
             {
-                if (handle.Options.firingMethod == IHandleOptions.FiringMethod.OnFocusGained)
-                    handle.InvokeAll(controller);
+                if (handle.Options.firingMethod == IHandle.IHandleOptions.FiringMethod.OnInit)
+                    handle.InvokeAll(controller/*,frame.Timestamp*/);
             }
         }
 
         override public void OnFocusLost(Controller arg0)
         {
+            //Frame frame = arg0.Frame();
             foreach (IHandle handle in Handles)
             {
-                if (handle.Options.firingMethod == IHandleOptions.FiringMethod.OnFocusLost)
-                    handle.InvokeAll(controller);
+                if (handle.Options.firingMethod == IHandle.IHandleOptions.FiringMethod.OnInit)
+                    handle.InvokeAll(controller/*,frame.Timestamp*/);
             }
         }
 
         override public void OnFrame(Controller arg0)
         {
+            Frame frame = arg0.Frame();
+            handsTracker.AddOrUpdate(frame.Hands); //hey bitch, watch this...its gunna eat memory if you don't clean it out at a set interval
+
             foreach (IHandle handle in Handles)
             {
-                if (handle.Options.firingMethod == IHandleOptions.FiringMethod.OnFrame)
-                    handle.InvokeAll(controller);
+                if (handle.Options.firingMethod == IHandle.IHandleOptions.FiringMethod.OnInit)
+                    handle.InvokeAll(controller, handsTracker, frame.Timestamp);
             }
         }
     }

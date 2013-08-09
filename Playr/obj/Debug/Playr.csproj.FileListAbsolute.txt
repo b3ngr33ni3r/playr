@@ -9,3 +9,8 @@ C:\Users\i53259\Documents\Visual Studio 2012\Projects\Playr\Playr\obj\Debug\Play
 C:\Users\i53259\Documents\Visual Studio 2012\Projects\Playr\Playr\bin\Debug\LeapCSharp.NET4.0.dll
 C:\Users\i53259\Documents\Visual Studio 2012\Projects\Playr\Playr\obj\Debug\Interop.Shell32.dll
 C:\Users\i53259\Documents\Visual Studio 2012\Projects\Playr\Playr\obj\Debug\Playr.csproj.ResolveComReference.cache
+D:\Users\B3N\Dev\Git\playr\Playr\bin\Debug\Playr.exe.config
+D:\Users\B3N\Dev\Git\playr\Playr\obj\Debug\Interop.Shell32.dll
+D:\Users\B3N\Dev\Git\playr\Playr\obj\Debug\Playr.csproj.ResolveComReference.cache
+D:\Users\B3N\Dev\Git\playr\Playr\obj\Debug\Playr.exe
+D:\Users\B3N\Dev\Git\playr\Playr\obj\Debug\Playr.pdb
