@@ -13,6 +13,7 @@ namespace Playr
         private HandsTracker handsTracker;
         public Handler() : base()
         {
+            Handles = new List<IHandle>();
             handsTracker = new HandsTracker(1000);
             controller = new Controller();
             controller.AddListener(this);
@@ -90,6 +91,7 @@ namespace Playr
         {
             Frame frame = arg0.Frame();
             handsTracker.AddOrUpdate(frame.Hands); //hey bitch, watch this...its gunna eat memory if you don't clean it out at a set interval
+            handsTracker.Clean(frame.Timestamp, 800000);
 
             foreach (IHandle handle in Handles)
             {

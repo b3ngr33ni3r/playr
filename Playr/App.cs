@@ -203,14 +203,25 @@ namespace Playr
             Handler handler = new Handler();
 
             IHandle ToggleDesktop = new IHandle();
-            ToggleDesktop.Actions += delegate(object sender,Controller controller){
-                Shell32.Shell objShel = new Shell32.Shell();
-                // Hide the desktop
-                ((Shell32.IShellDispatch4)objShel).ToggleDesktop();
+            ToggleDesktop.Actions += delegate(object sender,IHandle.IHandleActionArguments actionArgs){
+                IHandle.IHandleEventArguments arguments = (IHandle.IHandleEventArguments)sender;
+                //Controller controller = actionArgs.Controller;
+
+                bool toggleState = false;
+
+                foreach (PositionTracker tracker in arguments.Tracker.Values)
+                    if (tracker.ContainsDistanceOnAxis(300,Axis.Y))
+                        toggleState = true;
+
+                if (toggleState)
+                {
+                    Shell32.Shell objShel = new Shell32.Shell();
+                    // Hide the desktop
+                    ((Shell32.IShellDispatch4)objShel).ToggleDesktop();
+                }
             };
 
             handler.Handles.Add(ToggleDesktop);
-
             this.FormClosing += delegate(object sender, FormClosingEventArgs e) { handler.Shutdown(); notifyIcon.Visible = false; this.OnFormClosed(new FormClosedEventArgs(CloseReason.UserClosing)); };
         }
 

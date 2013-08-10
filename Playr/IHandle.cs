@@ -20,7 +20,7 @@ namespace Playr
 
         public class IHandleOptions
         {
-            public static const long TIMESTAMP_NEVER_FIRED = -1;
+            public const long TIMESTAMP_NEVER_FIRED = -1;
 
             public enum FiringMethod
             {
@@ -52,7 +52,42 @@ namespace Playr
 
         }
 
-        public event EventHandler<Controller> Actions;
+        //this is the object sender for Actions.
+        public class IHandleEventArguments
+        {
+            private IHandleOptions _opt;
+            public IHandleOptions Options
+            {
+                get { return _opt; }
+            }
+            private HandsTracker _tracker;
+            public HandsTracker Tracker
+            {
+                get { return _tracker; }
+            }
+
+            public IHandleEventArguments(IHandleOptions options, HandsTracker tracker)
+            {
+                _opt = options;
+                _tracker = tracker;
+            }
+        }
+
+        public class IHandleActionArguments : EventArgs
+        {
+            private Controller _controller;
+            public Controller Controller
+            {
+                get { return _controller; }
+            }
+            public IHandleActionArguments(Controller controller)
+            {
+                _controller = controller;
+            }
+        }
+
+        //our Action EventHandler we += delegates to.
+        public event EventHandler<IHandleActionArguments> Actions;
 
         private List<Vector> _pastQueue = new List<Vector>();
 
@@ -75,13 +110,12 @@ namespace Playr
 
         public bool InvokeAll(Controller controller, HandsTracker handsTracker = null, long frameTime = -1)
         {
-            //now pass a combination of IHandleOptions and HandsTracker to the method
-
+            
             if (frameTime == -1 && opts.firingMethod == IHandleOptions.FiringMethod.OnFrame)
                 return false;
 
             if ((opts.firingMethod == IHandleOptions.FiringMethod.OnFrame) && (opts.firedTimestamp == IHandleOptions.TIMESTAMP_NEVER_FIRED || opts.firedTimestamp < frameTime - opts.repeatTime))
-                Actions.Invoke(opts, controller);
+                Actions.Invoke(new IHandleEventArguments(opts,handsTracker), new IHandleActionArguments(controller));
 
             return true;
         }

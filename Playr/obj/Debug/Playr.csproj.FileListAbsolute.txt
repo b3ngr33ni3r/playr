@@ -14,3 +14,8 @@ D:\Users\B3N\Dev\Git\playr\Playr\obj\Debug\Interop.Shell32.dll
 D:\Users\B3N\Dev\Git\playr\Playr\obj\Debug\Playr.csproj.ResolveComReference.cache
 D:\Users\B3N\Dev\Git\playr\Playr\obj\Debug\Playr.exe
 D:\Users\B3N\Dev\Git\playr\Playr\obj\Debug\Playr.pdb
+D:\Users\B3N\Dev\Git\playr\Playr\obj\Debug\Playr.Properties.Resources.resources
+D:\Users\B3N\Dev\Git\playr\Playr\obj\Debug\Playr.csproj.GenerateResource.Cache
+D:\Users\B3N\Dev\Git\playr\Playr\bin\Debug\Playr.exe
+D:\Users\B3N\Dev\Git\playr\Playr\bin\Debug\Playr.pdb
+D:\Users\B3N\Dev\Git\playr\Playr\obj\Debug\Playr.csprojResolveAssemblyReference.cache
