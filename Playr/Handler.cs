@@ -14,7 +14,7 @@ namespace Playr
         public Handler() : base()
         {
             Handles = new List<IHandle>();
-            handsTracker = new HandsTracker(1000);
+            handsTracker = new HandsTracker(1000,0,new HandList());
             controller = new Controller();
             controller.AddListener(this);
             controller.SetPolicyFlags(Controller.PolicyFlag.POLICYBACKGROUNDFRAMES);
@@ -90,8 +90,8 @@ namespace Playr
         override public void OnFrame(Controller arg0)
         {
             Frame frame = arg0.Frame();
-            handsTracker.AddOrUpdate(frame.Hands); //hey bitch, watch this...its gunna eat memory if you don't clean it out at a set interval
-            handsTracker.Clean(frame.Timestamp, 800000);
+            handsTracker.AddOrUpdate(frame.Hands,frame.Timestamp); //hey bitch, watch this...its gunna eat memory if you don't clean it out at a set interval
+            //handsTracker.Clean(frame.Timestamp, 800000);
 
             foreach (IHandle handle in Handles)
             {

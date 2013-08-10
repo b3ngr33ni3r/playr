@@ -56,57 +56,65 @@ namespace Playr
         }
 
     }
-    class HandsTracker : Dictionary<Hand,PositionTracker>
+    class HandsTracker : Dictionary<int,PositionTracker>
     {
         
         private int historySize = -1;
-        public HandsTracker(int historySize,HandList list = null)
+        private Dictionary<int, long> stamps;
+        public HandsTracker(int historySize,long timestamp,HandList list)
             : base()
         {
+            stamps = new Dictionary<int, long>();
             this.historySize = historySize;
             if (list != null)
             {
                 foreach (Hand h in list)
                 {
-                    InitByHand(h);
+                    InitByHand(h,timestamp);
                 }
             }
         }
 
-        public void AddOrUpdate(Hand item)
+        public void AddOrUpdate(Hand item,long timestamp)
         {
-            if (ContainsKey(item))
-                this[item].Add(item.PalmPosition);
+            if (ContainsKey(item.Id))
+                this[item.Id].Add(item.PalmPosition);
             else
-                InitByHand(item);
+                InitByHand(item,timestamp);
         }
 
-        public void AddOrUpdate(HandList list)
+        public void AddOrUpdate(HandList list,long timestamp)
         {
             foreach (Hand item in list)
             {
-                if (ContainsKey(item))
-                    this[item].Add(item.PalmPosition);
+                if (ContainsKey(item.Id))
+                {
+                    this[item.Id].Add(item.PalmPosition);
+                    stamps[item.Id] = timestamp;
+                }
                 else
-                    InitByHand(item);
+                {
+                    InitByHand(item,timestamp);
+                }
             }
         }
 
-        private void InitByHand(Hand h)
+        private void InitByHand(Hand h,long timestamp)
         {
-            if (!ContainsKey(h))
+            if (!ContainsKey(h.Id))
             {
-                this.Add(h, new PositionTracker(historySize));
-                this[h].Add(h.PalmPosition);
+                this.Add(h.Id, new PositionTracker(historySize));
+                this[h.Id].Add(h.PalmPosition);
+                stamps.Add(h.Id, timestamp);
             }
         }
 
         //any data from before expirationAmount gets removed
         public void Clean(long timestamp,long expirationAmount)
         {
-            foreach (Hand h in this.Keys)
+            foreach (int h in this.Keys)
             {
-                if (timestamp - expirationAmount > h.Frame.Timestamp)
+                if (timestamp - expirationAmount > stamps[h])
                 {
                     this[h].Clear();
                     this.Remove(h);
