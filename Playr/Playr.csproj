@@ -64,7 +64,9 @@
     </Compile>
     <Compile Include="Handler.cs" />
     <Compile Include="IHandle.cs" />
+    <Compile Include="Motion.cs" />
     <Compile Include="PositionTracker.cs" />
+    <Compile Include="PredefinedMotions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

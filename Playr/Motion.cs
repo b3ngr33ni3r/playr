@@ -79,7 +79,6 @@ namespace Playr
             override public void OnFrame(Controller arg0)
             {
                 OnFrame.Invoke(arg0, new OnFrameMotionEventArgument(arg0.Frame(),positionsCache));
-                positionsCache.Add(
             }
 
             override public void OnInit(Controller arg0)
